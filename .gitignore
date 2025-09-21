@@ -5,6 +5,8 @@ preproc.awk
 *.BIN
 *.bin
 *.LST
+*.m
+*.M
 *.DAT
 *.com
 *.COM

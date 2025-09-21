@@ -1,0 +1,495 @@
+
+	include "general.inc"
+	org 04000h
+
+start:
+;	pFmToneTbl pos
+	pFmToneTbl fmInstrument_401b
+;	pNoteLengthTbl pos
+	pNoteLengthTbl noteLen_4a31
+;	pVolEnvTbl pos
+	pVolEnvTbl pVolSeq_4a41
+;	pPitchEnvTbl pos
+	pPitchEnvTbl pPitchSeq_4d1f
+;	pSongTbl pos
+	pSongTbl song_4e53
+;	pDrumMacroTbl pos
+	pDrumMacroTbl drumDef_487b
+;	magic data
+	magic ">MAIKO-HOSHINO "
+
+fmInstrument_401b:
+;	fmInstrument op1_dtml, op3_dtml, op2_dtml, op4_dtml, op1_tl, op3_tl, op2_tl, op4_tl, op1_ksar, op3_ksar, op2_ksar, op4_ksar, op1_dr, op3_dr, op2_dr, op4_dr, op1_sr, op3_sr, op2_sr, op4_sr, op1_slrr, op3_slrr, op2_slrr, op4_slrr, op1_ssge, op3_ssge, op2_ssge, op4_ssge, fbalg, unused1, unused2, unused3
+	fmInstrument 001 001 001 001 000 000 000 000 000 000 000 000 000 000 000 031 000 000 000 031 015 000 000 015 000 000 000 000 000 000 000 000
+	fmInstrument 002 004 002 002 022 040 025 000 150 081 142 017 006 005 003 000 000 000 000 000 017 017 065 010 000 000 000 000 042 240 000 000
+	fmInstrument 004 002 002 002 022 025 040 000 223 148 223 159 017 010 011 011 002 005 001 001 081 081 081 042 000 000 000 000 051 240 000 000
+	fmInstrument 008 002 002 002 042 040 043 000 093 093 093 094 007 006 007 008 005 004 005 005 245 245 245 231 000 000 000 000 059 240 000 000
+	fmInstrument 100 034 018 066 040 032 003 000 020 078 016 016 010 010 012 005 001 001 001 001 081 097 009 009 000 000 000 000 020 240 000 000
+	fmInstrument 001 004 002 001 039 051 044 003 095 095 019 083 000 015 011 015 000 000 000 000 000 009 075 008 000 000 000 000 059 240 000 000
+	fmInstrument 001 002 003 001 029 046 029 005 210 213 212 017 000 000 031 000 000 000 000 000 001 001 017 009 000 000 000 000 058 240 000 000
+	fmInstrument 001 001 003 001 020 046 040 005 020 016 016 020 010 005 005 005 003 000 000 000 038 022 022 025 000 000 000 000 058 240 000 000
+	fmInstrument 014 001 002 008 055 010 010 020 146 021 020 018 010 000 000 000 000 000 000 000 017 008 008 008 000 000 000 000 006 240 000 000
+	fmInstrument 001 001 001 001 035 045 030 000 013 015 016 018 011 015 010 006 000 000 000 000 130 114 018 024 000 000 000 000 058 240 000 000
+	fmInstrument 049 036 001 114 020 022 031 014 140 079 079 085 008 004 011 004 006 001 005 001 022 022 054 007 000 000 000 000 040 240 000 000
+	fmInstrument 012 002 015 002 027 035 034 004 159 159 159 095 005 016 010 012 004 006 016 010 039 023 247 056 000 000 000 000 058 240 000 000
+	fmInstrument 124 012 113 049 049 049 004 004 095 095 095 095 018 022 012 012 001 001 002 002 102 134 072 072 000 000 000 000 020 240 000 000
+	fmInstrument 010 048 112 000 026 020 035 006 031 095 031 095 016 010 014 010 000 004 004 003 038 038 038 006 000 000 000 000 008 240 000 000
+	fmInstrument 001 001 001 001 024 024 058 000 094 220 216 158 014 004 010 005 008 005 008 005 177 177 177 008 000 000 000 000 000 240 000 000
+	fmInstrument 048 048 004 112 024 020 030 007 095 031 095 031 020 010 014 004 004 007 007 003 038 006 070 007 000 000 000 000 000 240 000 000
+	fmInstrument 000 000 000 000 003 013 000 000 159 031 031 031 019 017 016 016 015 015 001 001 121 121 073 073 000 000 000 000 036 240 000 000
+	fmInstrument 000 000 000 000 005 013 000 000 223 031 031 031 019 017 016 016 015 015 001 001 121 121 073 073 000 000 000 000 036 240 000 000
+	fmInstrument 000 000 000 000 005 013 000 000 223 223 031 031 019 017 016 016 015 015 001 001 121 121 073 073 000 000 000 000 036 240 000 000
+	fmInstrument 000 000 000 000 004 012 000 000 159 223 031 031 019 017 016 016 015 015 001 001 121 121 073 073 000 000 000 000 036 240 000 000
+	fmInstrument 116 004 001 002 007 010 010 000 031 223 031 095 012 023 019 018 025 023 018 017 166 246 233 217 000 000 000 000 060 240 000 000
+	fmInstrument 004 001 001 002 000 010 017 000 031 031 031 031 012 022 017 017 025 023 016 016 166 246 088 089 000 000 000 000 060 240 000 000
+	fmInstrument 120 002 001 004 002 014 010 000 031 223 031 095 012 023 019 018 025 023 018 017 166 246 233 217 000 000 000 000 060 240 000 000
+	fmInstrument 116 004 001 002 007 010 014 000 031 223 031 095 012 023 018 018 025 023 020 017 166 246 042 217 000 000 000 000 060 240 000 000
+	fmInstrument 015 015 015 015 042 000 000 000 031 031 031 031 000 000 000 020 000 000 000 012 000 000 000 055 000 000 000 000 059 240 000 000
+	fmInstrument 015 015 015 015 044 000 000 000 031 031 031 031 000 000 000 020 000 000 000 012 000 000 000 055 000 000 000 000 059 240 000 000
+	fmInstrument 015 015 015 015 020 000 000 010 031 031 031 031 000 000 020 020 000 000 014 020 000 000 055 250 000 000 000 000 060 240 000 000
+	fmInstrument 000 018 000 082 000 000 000 000 031 031 031 031 000 000 019 000 000 016 019 016 000 008 249 008 000 000 000 000 062 240 000 000
+	fmInstrument 015 015 015 015 020 007 027 007 031 031 031 031 000 000 000 014 000 000 000 014 000 000 000 247 000 000 000 000 059 240 000 000
+	fmInstrument 015 015 015 015 018 000 020 007 031 031 031 031 000 000 000 015 000 000 000 015 000 000 000 247 000 000 000 000 059 240 000 000
+	fmInstrument 015 015 015 015 018 000 020 007 031 031 031 031 000 000 000 018 000 000 000 019 000 000 000 250 000 000 000 000 059 240 000 000
+	fmInstrument 015 015 015 015 000 000 000 007 031 031 031 031 000 000 000 022 000 000 000 022 000 000 000 251 000 000 000 000 059 240 000 000
+	fmInstrument 098 097 052 098 015 036 067 005 031 159 159 031 027 010 011 000 000 008 003 000 000 162 021 006 000 000 000 000 050 240 000 000
+	fmInstrument 018 081 083 017 020 028 035 000 020 084 084 084 004 007 007 005 001 001 001 001 054 022 054 023 000 000 000 000 003 240 000 000
+	fmInstrument 114 034 004 008 027 000 005 020 202 138 074 013 010 012 007 015 000 000 000 000 054 023 008 025 000 000 000 000 062 240 000 000
+	fmInstrument 000 000 000 000 004 017 000 000 159 095 031 095 019 017 015 016 017 015 001 001 119 119 085 085 000 000 000 000 036 240 000 000
+	fmInstrument 113 002 000 000 002 014 002 000 031 223 031 095 012 016 017 018 025 023 015 020 166 086 248 088 000 000 000 000 060 240 000 000
+	fmInstrument 116 056 050 116 035 036 012 010 014 018 015 020 004 008 004 007 004 007 004 007 036 035 005 004 000 000 000 000 004 240 000 000
+	fmInstrument 124 120 044 082 053 055 005 000 031 031 095 031 017 018 017 015 010 015 012 004 133 117 021 021 000 000 000 000 060 240 000 000
+	fmInstrument 005 002 001 001 020 013 000 000 082 082 082 015 013 012 005 013 001 010 005 005 120 056 024 008 000 000 000 000 028 240 000 000
+	fmInstrument 112 000 118 001 033 040 020 000 031 031 146 031 015 005 016 013 007 006 006 008 040 023 071 087 000 000 000 000 058 240 000 000
+	fmInstrument 002 002 008 004 035 030 027 000 081 017 077 012 015 005 004 005 003 001 001 001 065 025 017 025 000 000 000 000 003 240 000 000
+	fmInstrument 116 049 033 052 016 010 027 000 019 028 018 025 005 005 005 006 003 003 003 003 072 088 040 056 000 000 000 000 059 240 000 000
+	fmInstrument 116 049 033 052 018 010 025 000 019 028 018 025 005 005 005 006 003 003 003 003 072 088 040 056 000 000 000 000 035 240 000 000
+	fmInstrument 002 002 004 004 016 010 000 000 095 095 031 031 008 008 010 010 001 001 005 005 043 043 011 011 000 000 000 000 044 240 000 000
+	fmInstrument 102 080 057 058 028 020 050 000 031 031 223 095 012 005 002 001 004 004 004 008 026 246 246 040 000 000 000 000 058 240 000 000
+	fmInstrument 001 049 003 001 030 040 015 000 020 020 031 095 004 001 020 000 000 020 009 005 042 208 197 024 000 000 000 000 058 240 000 000
+	fmInstrument 051 049 051 033 023 023 063 000 158 220 216 156 014 004 010 005 008 001 008 008 182 086 182 182 000 000 000 000 048 240 000 000
+	fmInstrument 112 050 048 117 000 005 010 010 031 031 031 031 000 000 000 024 000 000 000 019 000 005 003 026 000 000 000 000 057 240 000 000
+	fmInstrument 112 054 050 117 000 025 005 000 031 031 031 031 000 000 000 029 000 000 000 014 000 005 003 058 000 000 000 000 057 240 000 000
+	fmInstrument 001 001 042 017 026 054 030 004 142 079 089 082 010 011 013 003 000 000 003 000 021 037 255 040 000 000 000 000 058 240 000 000
+	fmInstrument 018 002 026 018 029 051 029 000 092 092 083 077 007 007 009 004 000 000 000 000 019 019 050 007 000 000 000 000 058 240 000 000
+	fmInstrument 049 036 012 001 033 049 071 000 156 156 219 218 004 004 009 003 003 003 001 000 023 006 002 165 000 000 000 000 058 240 000 000
+	fmInstrument 004 002 002 002 023 035 005 005 015 012 074 015 020 010 005 005 003 001 003 003 057 089 057 057 000 000 000 000 020 240 000 000
+	fmInstrument 015 049 034 003 040 040 020 007 031 030 031 020 000 000 000 000 000 000 000 000 000 002 003 007 000 000 000 000 003 240 000 000
+	fmInstrument 002 002 038 018 025 042 032 010 141 021 079 082 006 007 008 004 002 000 000 000 024 040 024 040 000 000 000 000 058 240 000 000
+	fmInstrument 063 001 001 001 040 042 020 000 159 158 219 094 015 007 006 006 008 011 010 000 138 246 134 247 000 000 000 000 028 240 000 000
+	fmInstrument 002 002 002 002 030 029 005 005 018 019 023 023 008 008 010 010 004 004 005 005 039 055 041 057 000 000 000 000 060 240 000 000
+	fmInstrument 068 004 068 004 047 045 000 014 082 142 018 142 007 004 000 005 000 005 000 000 017 161 010 106 000 000 000 000 004 240 000 000
+	fmInstrument 058 010 001 001 052 057 000 000 159 159 031 095 021 021 009 008 015 015 004 002 241 241 058 058 000 000 000 000 004 240 000 000
+	fmInstrument 066 006 065 003 035 052 042 000 018 018 018 144 007 004 007 005 000 000 000 000 017 001 017 010 000 000 000 000 003 240 000 000
+	fmInstrument 002 002 002 002 020 013 000 000 081 018 018 144 015 018 001 001 000 000 000 000 145 065 026 010 000 000 000 000 060 240 000 000
+	fmInstrument 014 006 008 002 037 030 040 000 159 148 223 159 008 008 007 007 003 000 000 001 113 065 065 074 000 000 000 000 043 240 000 000
+	fmInstrument 001 001 004 001 020 029 040 000 142 141 142 083 014 014 012 003 000 000 000 000 019 019 250 010 000 000 000 000 058 240 000 000
+	fmInstrument 012 001 012 003 045 027 045 000 159 031 095 159 002 000 000 015 007 007 007 007 250 007 007 023 000 000 000 000 001 240 000 000
+	fmInstrument 011 000 004 001 020 023 058 000 222 220 216 158 015 004 011 005 000 000 000 001 177 081 145 008 000 000 000 000 000 240 000 000
+	fmInstrument 010 000 003 002 022 024 050 000 222 156 216 158 015 004 011 005 000 000 000 003 177 081 081 008 000 000 000 000 000 240 000 000
+
+drumDef_487b:
+;	drumDef instr, note, vol_mod, vol_env_ptr, pitch_env_ptr, ssg_mask_env_ptr, ssg_noise_env_ptr
+	drumDef 016 as2 000 volSeq_4a79 pitchSeq_4d3f 000          000
+	drumDef 017 as2 000 volSeq_4a79 pitchSeq_4d3f 000          000
+	drumDef 018 as2 000 volSeq_4a79 pitchSeq_4d3f 000          000
+	drumDef 019 as2 001 volSeq_4a79 pitchSeq_4d3f 000          000
+	drumDef 020 f3  000 volSeq_4a79 pitchSeq_4d3f 000          000
+	drumDef 021 f3  000 volSeq_4a79 pitchSeq_4d3f 000          000
+	drumDef 022 f3  000 volSeq_4a79 pitchSeq_4d3f 000          000
+	drumDef 023 as3 000 volSeq_4a79 pitchSeq_4d3f 000          000
+	drumDef 024 fs3 000 volSeq_4a79 pitchSeq_4d3f 000          000
+	drumDef 025 fs3 000 volSeq_4a79 pitchSeq_4d3f 000          000
+	drumDef 026 fs4 000 volSeq_4a79 pitchSeq_4d3f 000          000
+	drumDef 027 ds4 002 volSeq_4a79 pitchSeq_4a1f 000          000
+	drumDef 027 as3 002 volSeq_4a79 pitchSeq_4a1f 000          000
+	drumDef 027 fs3 002 volSeq_4a79 pitchSeq_4a1f 000          000
+	drumDef 027 c3  002 volSeq_4a79 pitchSeq_4a1f 000          000
+	drumDef 028 gs5 001 volSeq_4a79 pitchSeq_4d3f 000          000
+	drumDef 029 gs5 001 volSeq_4a79 pitchSeq_4d3f 000          000
+	drumDef 030 gs5 000 volSeq_4a79 pitchSeq_4d3f 000          000
+	drumDef 031 b5  002 volSeq_4a79 pitchSeq_4d3f 000          000
+	drumDef 000 as2 000 volSeq_49af pitchSeq_49b3 gateSeq_49b5 noiseSeq_49b7
+	drumDef 000 f4  000 volSeq_49b9 pitchSeq_49c0 gateSeq_49c6 noiseSeq_49c8
+	drumDef 000 fs4 000 volSeq_49ce pitchSeq_49d5 gateSeq_49d7 noiseSeq_49e1
+	drumDef 000 ds4 000 volSeq_49e7 pitchSeq_49ef gateSeq_49f1 noiseSeq_49fb
+	drumDef 000 c4  000 volSeq_4a02 pitchSeq_4a0b gateSeq_4a0d noiseSeq_4a17
+	drumDef 000 cs3 000 volSeq_4c38 pitchSeq_4d3f gateSeq_4a21 noiseSeq_4a28
+	drumDef 035 as2 000 volSeq_4a79 pitchSeq_4d3f 000          000
+	drumDef 036 as2 000 volSeq_4a79 pitchSeq_4d3f 000          000
+	drumDef 000 cs3 002 volSeq_49af pitchSeq_49b3 gateSeq_4a2f noiseSeq_49b7
+
+volSeq_49af:
+;	volSeq tokens
+	volSeq 15 7 0 vStop
+
+pitchSeq_49b3:
+;	pitchSeq tokens
+	pitchSeq 30 pStop
+
+gateSeq_49b5:
+;	gateSeq tokens
+	gateSeq 1 nEnd
+
+noiseSeq_49b7:
+;	noiseSeq tokens
+	noiseSeq 0 nEnd
+
+volSeq_49b9:
+;	volSeq tokens
+	volSeq 15 12 9 6 3 0 vStop
+
+pitchSeq_49c0:
+;	pitchSeq tokens
+	pitchSeq -10 -10 10 10 10 pStop
+
+gateSeq_49c6:
+;	gateSeq tokens
+	gateSeq 3 nEnd
+
+noiseSeq_49c8:
+;	noiseSeq tokens
+	noiseSeq 10 12 14 16 18 nEnd
+
+volSeq_49ce:
+;	volSeq tokens
+	volSeq 15 13 10 6 1 0 vStop
+
+pitchSeq_49d5:
+;	pitchSeq tokens
+	pitchSeq 50 pStop
+
+gateSeq_49d7:
+;	gateSeq tokens
+	gateSeq 3 3 3 1 3 3 3 1 3 nEnd
+
+noiseSeq_49e1:
+;	noiseSeq tokens
+	noiseSeq 10 8 6 4 2 nEnd
+
+volSeq_49e7:
+;	volSeq tokens
+	volSeq 15 14 13 10 6 1 0 vStop
+
+pitchSeq_49ef:
+;	pitchSeq tokens
+	pitchSeq 60 pStop
+
+gateSeq_49f1:
+;	gateSeq tokens
+	gateSeq 3 3 1 3 3 1 3 3 1 nEnd
+
+noiseSeq_49fb:
+;	noiseSeq tokens
+	noiseSeq 20 18 16 14 12 10 nEnd
+
+volSeq_4a02:
+;	volSeq tokens
+	volSeq 15 15 14 13 10 6 1 0 vStop
+
+pitchSeq_4a0b:
+;	pitchSeq tokens
+	pitchSeq 80 pStop
+
+gateSeq_4a0d:
+;	gateSeq tokens
+	gateSeq 3 1 3 1 3 1 3 1 3 nEnd
+
+noiseSeq_4a17:
+;	noiseSeq tokens
+	noiseSeq 30 28 26 24 22 20 18 nEnd
+
+pitchSeq_4a1f:
+;	pitchSeq tokens
+	pitchSeq -30 pStop
+
+gateSeq_4a21:
+;	gateSeq tokens
+	gateSeq 1 2 2 2 2 0 nEnd
+
+noiseSeq_4a28:
+;	noiseSeq tokens
+	noiseSeq 0 4 3 2 1 0 nEnd
+
+gateSeq_4a2f:
+;	gateSeq tokens
+	gateSeq 2 nEnd
+
+noteLen_4a31:
+;	noteLen duration
+	noteLen 001
+	noteLen 002
+	noteLen 003
+	noteLen 004
+	noteLen 006
+	noteLen 008
+	noteLen 012
+	noteLen 016
+	noteLen 024
+	noteLen 032
+	noteLen 048
+	noteLen 009
+	noteLen 018
+	noteLen 030
+	noteLen 036
+	noteLen 042
+
+pVolSeq_4a41:
+;	pVolSeq pos
+	pVolSeq volSeq_4a79
+	pVolSeq volSeq_4a7b
+	pVolSeq volSeq_4aa9
+	pVolSeq volSeq_4ab4
+	pVolSeq volSeq_4abd
+	pVolSeq volSeq_4ae5
+	pVolSeq volSeq_4af4
+	pVolSeq volSeq_4b18
+	pVolSeq volSeq_4b43
+	pVolSeq volSeq_4b50
+	pVolSeq volSeq_4b8b
+	pVolSeq volSeq_4b98
+	pVolSeq volSeq_4b9b
+	pVolSeq volSeq_4be6
+	pVolSeq volSeq_4bf1
+	pVolSeq volSeq_4c08
+	pVolSeq volSeq_4c0f
+	pVolSeq volSeq_4c20
+	pVolSeq volSeq_4c32
+	pVolSeq volSeq_4c38
+	pVolSeq volSeq_4c3f
+	pVolSeq volSeq_4c70
+	pVolSeq volSeq_4cab
+	pVolSeq volSeq_4ce3
+	pVolSeq volSeq_4cf2
+	pVolSeq volSeq_4cfc
+	pVolSeq volSeq_4d04
+	pVolSeq volSeq_4d0d
+
+volSeq_4a79:
+;	volSeq tokens
+	volSeq 15 vStop
+
+volSeq_4a7b:
+	volSeq 0 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 14 14 13 13 12 12 11 11 11 10 10 10 10 9 9 9 9 8 8 8 7 7 5 5 0 vStop
+
+volSeq_4aa9:
+	volSeq 15 14 13 12 11 10 8 6 4 0 vStop
+
+volSeq_4ab4:
+	volSeq 15 13 11 10 10 10 8 0 vStop
+
+volSeq_4abd:
+	volSeq 15 15 14 14 13 13 12 12 12 11 11 11 11 11 11 11 11 10 10 10 9 9 9 8 8 8 7 7 7 6 6 6 5 5 4 4 3 3 0 vStop
+
+volSeq_4ae5:
+	volSeq 13 14 15 15 14 14 13 13 12 12 11 10 9 8 vStop
+
+volSeq_4af4:
+	volSeq 0 15 vMark 15 14 14 14 13 13 13 12 12 11 11 10 10 10 10 10 9 9 9 9 8 8 8 7 7 7 5 4 3 2 1 0 vStop
+
+volSeq_4b18:
+	volSeq 8 12 14 15 vMark 14 14 13 13 12 12 11 11 11 10 10 10 10 10 9 9 9 9 9 8 8 8 8 8 7 7 7 6 6 5 5 4 4 3 2 1 0 vStop
+
+volSeq_4b43:
+	volSeq 8 11 13 14 15 15 15 14 13 12 11 10 vStop
+
+volSeq_4b50:
+	volSeq 15 15 15 15 14 14 14 14 13 13 13 13 13 12 12 12 12 12 11 11 11 11 11 11 11 11 10 10 10 10 10 10 10 10 10 9 9 9 9 9 7 7 7 7 7 5 5 5 5 5 3 3 3 2 2 2 2 0 vStop
+
+volSeq_4b8b:
+	volSeq 10 12 14 15 15 15 14 14 14 13 13 12 vStop
+
+volSeq_4b98:
+	volSeq 15 0 vStop
+
+volSeq_4b9b:
+	volSeq 0 15 15 15 14 14 14 13 13 13 12 12 12 11 11 11 11 11 11 10 10 10 0 12 12 11 11 10 10 9 9 9 8 8 8 8 8 8 8 8 7 7 7 0 9 9 9 9 9 9 9 9 8 8 8 7 7 7 6 6 6 5 5 5 4 4 4 3 3 2 2 1 1 0 vStop
+
+volSeq_4be6:
+	volSeq 15 15 15 14 14 13 12 11 10 0 vStop
+
+volSeq_4bf1:
+	volSeq 15 15 14 14 13 13 12 12 12 11 11 11 10 10 10 9 8 7 6 5 4 0 vStop
+
+volSeq_4c08:
+	volSeq 12 11 8 6 4 0 vStop
+
+volSeq_4c0f:
+	volSeq 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0 vStop
+
+volSeq_4c20:
+	volSeq 15 vMark 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0 vStop
+
+volSeq_4c32:
+	volSeq 15 15 14 14 13 vStop
+
+volSeq_4c38:
+	volSeq 15 12 10 8 6 0 vStop
+
+volSeq_4c3f:
+	volSeq 15 15 14 13 12 11 10 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 8 8 8 8 7 7 7 7 6 vStop
+
+volSeq_4c70:
+	volSeq 15 vMark 14 14 14 13 13 13 12 12 12 11 11 11 10 10 10 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 8 8 8 8 7 7 7 7 6 vStop
+
+volSeq_4cab:
+	volSeq 15 15 15 15 15 15 14 14 14 14 14 14 13 13 13 13 13 13 13 12 12 12 12 12 12 12 11 11 11 11 11 11 11 11 11 11 10 10 10 10 10 10 10 10 10 10 10 9 9 9 9 9 9 9 7 vStop
+
+volSeq_4ce3:
+	volSeq 13 14 15 15 14 14 13 13 12 12 11 11 11 10 vStop
+
+volSeq_4cf2:
+	volSeq 13 13 14 14 15 15 14 14 13 vStop
+
+volSeq_4cfc:
+	volSeq 15 14 13 12 11 10 8 vStop
+
+volSeq_4d04:
+	volSeq 12 14 14 15 15 15 14 13 vStop
+
+volSeq_4d0d:
+	volSeq 8 10 12 13 14 15 15 15 14 14 13 13 12 12 11 11 10 vStop
+
+pPitchSeq_4d1f:
+;	pPitchSeq pos
+	pPitchSeq pitchSeq_4d3f
+	pPitchSeq pitchSeq_4d41
+	pPitchSeq pitchSeq_4d4a
+	pPitchSeq pitchSeq_4d57
+	pPitchSeq pitchSeq_4d7b
+	pPitchSeq pitchSeq_4da4
+	pPitchSeq pitchSeq_4dca
+	pPitchSeq pitchSeq_4de6
+	pPitchSeq pitchSeq_4dfc
+	pPitchSeq pitchSeq_4e12
+	pPitchSeq pitchSeq_4e1f
+	pPitchSeq pitchSeq_4e21
+	pPitchSeq pitchSeq_4e23
+	pPitchSeq pitchSeq_4e2e
+	pPitchSeq pitchSeq_4e33
+	pPitchSeq pitchSeq_4e37
+
+pitchSeq_4d3f:
+;	pitchSeq tokens
+	pitchSeq 0 pStop
+
+pitchSeq_4d41:
+	pitchSeq 2 1 0 -1 -2 -1 0 1 pStop
+
+pitchSeq_4d4a:
+	pitchSeq 0 0 0 1 0 0 0 0 0 -1 0 0 pStop
+
+pitchSeq_4d57:
+	pitchSeq 32 -12 -8 -4 -2 -2 -2 -1 -1 0 0 0 0 0 0 0 0 0 1 2 0 0 -1 -2 0 0 0 3 3 0 0 -3 -3 0 pJump 10
+
+pitchSeq_4d7b:
+	pitchSeq 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 6 3 0 -3 -6 -3 0 3 pJump 8
+
+pitchSeq_4da4:
+	pitchSeq 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1 0 0 1 0 0 pJump 6
+
+pitchSeq_4dca:
+	pitchSeq 32 -12 -8 -4 -2 -2 -2 -1 -1 0 0 0 0 0 0 0 0 0 1 0 0 0 -1 0 0 0 pJump 8
+
+pitchSeq_4de6:
+	pitchSeq 0 -1 -2 1 2 0 0 0 0 1 1 1 1 1 0 1 0 1 0 1 0 pStop
+
+pitchSeq_4dfc:
+	pitchSeq 0 1 2 -1 -2 0 0 0 0 -1 -1 -1 -1 -1 0 -1 0 -1 0 -1 0 pStop
+
+pitchSeq_4e12:
+	pitchSeq 1 1 1 -1 -1 -1 -1 -1 -1 1 1 1 pStop
+
+pitchSeq_4e1f:
+	pitchSeq 5 pStop
+
+pitchSeq_4e21:
+	pitchSeq -5 pStop
+
+pitchSeq_4e23:
+	pitchSeq -100 50 25 12 6 3 2 1 0 pJump 1
+
+pitchSeq_4e2e:
+	pitchSeq 40 -40 -40 40 pStop
+
+pitchSeq_4e33:
+	pitchSeq -15 -30 10 pStop
+
+pitchSeq_4e37:
+	pitchSeq 32 -12 -8 -4 -2 -2 -2 -1 -1 0 0 0 0 0 0 0 0 0 1 0 0 0 -1 0 0 0 pJump 8
+
+song_4e53:
+;	song pos
+	song songDef_4e57
+
+	dw 0000h
+
+songDef_4e57:
+;	songDef flags, track_count
+	songDef 008 006
+;	track num, mode, vol, vol_env, pitch_env, transpose, speed, chan, seq_ptr, instrument, unknown
+	track 000 001 011 000 000 012 058 004 lead  000 000
+	track 001 001 011 007 002 012 058 003 lead_delay   000 000
+	track 002 001 010 000 000 012 058 000 acco  011 000
+	track 003 001 011 009 000 012 058 005 bass 000 000
+	track 004 001 008 000 000 012 058 002 sub_melo 004 000
+	track 005 001 007 000 000 000 058 001 sub_melo 001 000
+
+lead_delay:
+	r w4
+
+lead:
+	g4 w 96 g4 w12
+	c5 w6 gs4 f4 ds4 d4 ds4
+		d4 w1 ds4 d4 ds4 d4 ds4 d4 ds4 d4
+		d4 w12 c4 w6 as3 w18 as3 w3
+
+	as4 w 54
+		g4 w6 cs4 c4 f4 e4 as4 gs4
+
+	gs4 w 54
+		f4 w6 c4 as3 ds4 d4 gs4 g4
+
+	g4 w36
+	  a4 w6 as4 ds4 w12 ds4 w3 f4 g4 w12 f4 ds4 w6 d4 c4 c4 w3 d4
+	  ds4 w18 d4 w6 c4 as3 w48
+	goto lead
+
+acco:
+	g3 w12 g3 as3 as3 c4 c4 as3 w6 g3 f3 g3
+
+	gs3 w12 gs3 w6 g3 a3 w12 a3 as3 as3 as4 w6 g4 f4 ds4
+
+	cs4 w3 c4 cs4 w18 c4 w6 as4 g4 cs4 c4 w12 c4 as3 as3
+
+	c4 c4 as3 w6 c4 d4 ds4 as3 w12 as3 as3 w6 c4 as3 gs3
+
+	g3 w1 gs3 g3 g3 w3 f3 w6 g3 w12 d3 d3 ds3 g3 w6 f3 ds3 w12 c3 f3 d3 ds3 a2
+		as2 w6 c3 d3 ds3 f3 gs3 g3 f3
+	goto acco
+
+bass:
+	as2 w12 ds3 d3 d2 gs2 c3 as2 as1 gs1
+
+	gs2 a2 a1 as1 as2 gs2 gs1
+
+	g1 g2 f2 f1 e2 e2 g1 g2
+
+	gs1 gs2 f2 f1 as1 as2 d2 d2 g2
+
+	g2 d2 d1 ds2 g2 f2 as1 d2 as1 c2 a1
+		as1 w6 c2 d2 ds2 f2 gs2 g2 f2
+
+	goto bass
+
+sub_melo:
+	ds3 w12 ds3 g3 g3 gs3 gs3 ds3 w24 ds3 w12 ds3
+
+	f3 f3 d3 d3 ds3 w24 g2 w12
+
+	g3 f3 f3 e3 e3 g2 g3 gs3 gs3
+
+	g3 g3 f3 f3 d3 f3 ds3 ds3 as2 f3 as2 ds3 c3 r
+		d3 as2 c3 f2 f2 w48
+
+	goto sub_melo
