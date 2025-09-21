@@ -1,0 +1,16 @@
+*.lst
+*.asm
+vcmds.inc
+preproc.awk
+*.BIN
+*.bin
+*.LST
+*.DAT
+*.com
+*.COM
+/includes
+__pycache__
+
+*.id?
+*.til
+*.nam
