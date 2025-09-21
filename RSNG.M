@@ -428,12 +428,12 @@ songDef_4e57:
 ;	songDef flags, track_count
 	songDef 008 006
 ;	track num, mode, vol, vol_env, pitch_env, transpose, speed, chan, seq_ptr, instrument, unknown
-	track 000 001 011 000 000 012 058 004 lead  000 000
-	track 001 001 011 007 002 012 058 003 lead_delay   000 000
-	track 002 001 010 000 000 012 058 000 acco  011 000
-	track 003 001 011 009 000 012 058 005 bass 000 000
-	track 004 001 008 000 000 012 058 002 sub_melo 004 000
-	track 005 001 007 000 000 000 058 001 sub_melo 001 000
+	track 000 001 011 000 000 012 058 004 lead       000 000
+	track 001 001 011 007 002 012 058 003 lead_delay 000 000
+	track 002 001 010 000 000 012 058 000 acco       011 000
+	track 003 001 011 009 000 012 058 005 bass       000 000
+	track 004 001 008 000 000 012 058 002 sub_melo   004 000
+	track 005 001 007 000 000 000 058 001 sub_melo   001 000
 
 lead_delay:
 	r w4
@@ -477,7 +477,8 @@ bass:
 
 	gs1 gs2 f2 f1 as1 as2 d2 d2 g2
 
-	g2 d2 d1 ds2 g2 f2 as1 d2 as1 c2 a1
+	g2 d2 d1 ds2 g2 f2 as1
+		d2 as1 c2 a1
 		as1 w6 c2 d2 ds2 f2 gs2 g2 f2
 
 	goto bass
@@ -485,11 +486,13 @@ bass:
 sub_melo:
 	ds3 w12 ds3 g3 g3 gs3 gs3 ds3 w24 ds3 w12 ds3
 
-	f3 f3 d3 d3 ds3 w24 g2 w12
+	f3 f3 d3 d3 ds3 w24
 
-	g3 f3 f3 e3 e3 g2 g3 gs3 gs3
+	g2 w12 g3 f3 f3 e3 e3 g2 g3
 
-	g3 g3 f3 f3 d3 f3 ds3 ds3 as2 f3 as2 ds3 c3 r
+	gs3 gs3 g3 g3 f3 f3 d3 f3
+
+	ds3 ds3 as2 f3 as2 ds3 c3 r
 		d3 as2 c3 f2 f2 w48
 
 	goto sub_melo
