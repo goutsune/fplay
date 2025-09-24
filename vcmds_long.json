@@ -22,7 +22,7 @@
     "0x91": ["gameCallbackValueSet", "n"],
     "0x92": ["setNoisePeriod", "n"],
     "0x93": ["startFade", "level,s", "speed"],
-    "0x94": ["addRelTranspose", "n"],
+    "0x94": ["addTransposeOnce", "n,s"],
     "0x95": ["jumpIfFading,e", "addr,w"],
     "0x96": ["setSpeedPeriod", "period"],
     "0x97": ["setFinetune", "n,s"],

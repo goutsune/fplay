@@ -709,12 +709,12 @@ code:0A63                 jmp     INT_FUNC_END
 code:0A66 ; ---------------------------------------------------------------------------
 code:0A66 getTrack13NoteOffset:                                       ; CODE XREF: INT_FUNC+12↑j
 code:0A66                                                             ; DATA XREF: code:funcJumpTable↑o
-code:0A66                 mov     al, [TRACK13.n_offset_abs]          ; jumptable 0000000000000812 case 24
+code:0A66                 mov     al, [TRACK13.n_offset_track]        ; jumptable 0000000000000812 case 24
 code:0A69                 jmp     INT_FUNC_END
 code:0A6C ; ---------------------------------------------------------------------------
 code:0A6C setTrack13NoteOffset:                                       ; CODE XREF: INT_FUNC+12↑j
 code:0A6C                                                             ; DATA XREF: code:funcJumpTable↑o
-code:0A6C                 mov     [TRACK13.n_offset_abs], al          ; jumptable 0000000000000812 case 25
+code:0A6C                 mov     [TRACK13.n_offset_track], al        ; jumptable 0000000000000812 case 25
 code:0A6F                 jmp     INT_FUNC_END
 code:0A6F ; END OF FUNCTION CHUNK FOR INT_FUNC
 code:0A72 ; =============== S U B R O U T I N E =======================================
@@ -799,9 +799,9 @@ code:0AE7                 and     al, TrackFlags_20
 code:0AE9                 mov     [PROC_DISABLED], al
 code:0AEC                 mov     [di+trackState.is_bgm_track], ch
 code:0AEF                 mov     al, [si]
-code:0AF1                 mov     [di+trackState.volume], al
-code:0AF4                 mov     [di+trackState.vcmd_volume], al
-code:0AF7                 mov     [di+trackState.volume2], al
+code:0AF1                 mov     [di+trackState.volume_track], al
+code:0AF4                 mov     [di+trackState.volume_vcmd], al
+code:0AF7                 mov     [di+trackState.volume_unused], al
 code:0AFA                 inc     si
 code:0AFB                 mov     al, [si]
 code:0AFD                 inc     si
@@ -826,7 +826,7 @@ code:0B22                 mov     [di+trackState.pitch_env_ptr], ax
 code:0B25                 mov     [di+trackState.pitch_env_pos], ax
 code:0B28                 pop     si
 code:0B29                 mov     al, [si]
-code:0B2B                 mov     [di+trackState.n_offset_abs], al
+code:0B2B                 mov     [di+trackState.n_offset_track], al
 code:0B2E                 inc     si
 code:0B2F                 mov     al, [si]
 code:0B31                 mov     [di+trackState.tempo], al
@@ -853,7 +853,7 @@ code:0B5F                 mov     [di+trackState.tempo_tick], 0
 code:0B63                 mov     [di+trackState.tick_cycled], FALSE
 code:0B67                 mov     [di+trackState.cycles_left], 1
 code:0B6B                 mov     [di+trackState.koff_cycle], 2
-code:0B6F                 mov     [di+trackState.n_offset_abs_vcmd], 0
+code:0B6F                 mov     [di+trackState.n_offset_vcmd], 0
 code:0B73                 mov     [di+trackState.legato_enabled], FALSE
 code:0B77                 mov     [di+trackState.fm3_enabled], FALSE
 code:0B7B                 mov     [di+trackState.fade_in_progess], 0
@@ -861,7 +861,7 @@ code:0B7F                 mov     [di+trackState.note], 0
 code:0B83                 mov     [di+trackState.fine_tune], 0
 code:0B87                 mov     [di+trackState.unused_4], 0
 code:0B8B                 mov     [di+trackState.porta_speed], 0
-code:0B8F                 mov     [di+trackState.note_offset_rel], 0
+code:0B8F                 mov     [di+trackState.n_offset_single], 0
 code:0B93                 mov     [di+trackState.note_played_once], 0
 code:0B97                 mov     [di+trackState.pitch_env_mult], 0
 code:0B9B                 mov     [di+trackState.porta_finished], 0FFh
@@ -1041,7 +1041,7 @@ code:10D4                 mov     [SEQ_CUSTOM_IS_SET], FALSE
 code:10D9                 mov     [FM3EX_ENABLED], FALSE
 code:10DE                 mov     di, offset TRACK16
 code:10E1                 mov     cx, 10h
-code:10E4 loop:                                                       ; CODE XREF: PLAY_INTERRUPT+109↓j
+code:10E4 _loop:                                                      ; CODE XREF: PLAY_INTERRUPT+109↓j
 code:10E4                 push    cx
 code:10E5                 mov     al, [di+trackState.output_channel]
 code:10E7                 and     al, al
@@ -1057,7 +1057,7 @@ code:1102                 call    SOFTEV
 code:1105 track_no_chan:                                              ; CODE XREF: PLAY_INTERRUPT+E9↑j
 code:1105                 pop     cx
 code:1106                 add     di, trackStateSize
-code:1109                 loop    loop
+code:1109                 loop    _loop
 code:110B                 mov     [DRUM_TRACK_FLAGS], not (t_ssg_ioA)
 code:1110                 mov     [IS_SFX_PLAYING], FALSE
 code:1115                 mov     [SSG_STATS], 0FFh
@@ -1095,7 +1095,7 @@ code:1161 loc_1161:                                                   ; CODE XRE
 code:1161                 mov     [si], al
 code:1163                 cmp     [di+trackState.note], 0
 code:1167                 jz      short _is_ssg
-code:1169                 cmp     [di+trackState.vcmd_volume], 0
+code:1169                 cmp     [di+trackState.volume_vcmd], 0
 code:116D                 jz      short _is_ssg
 code:116F                 mov     ah, [di+trackState.track_flags]
 code:1172                 mov     al, 11111111b
@@ -1421,7 +1421,7 @@ code:13C8                 jnz     short _note_set
 code:13CA                 retn
 code:13CB ; ---------------------------------------------------------------------------
 code:13CB _note_set:                                                  ; CODE XREF: PWSEP+4↑j
-code:13CB                 mov     al, [di+trackState.note_offset_rel]
+code:13CB                 mov     al, [di+trackState.n_offset_single]
 code:13CE                 and     al, al
 code:13D0                 jnz     short _enabled
 code:13D2                 retn
@@ -1436,8 +1436,8 @@ code:13DC                 sub     al, ah                              ; substrac
 code:13DE                 and     al, 01111111b
 code:13E0                 mov     [di+trackState.note], al
 code:13E3                 dec     al
-code:13E5                 add     al, [di+trackState.n_offset_abs]
-code:13E8                 add     al, [di+trackState.n_offset_abs_vcmd]
+code:13E5                 add     al, [di+trackState.n_offset_track]
+code:13E8                 add     al, [di+trackState.n_offset_vcmd]
 code:13EB                 and     al, 01111111b
 code:13ED                 jmp     short loc_1404
 code:13EF ; ---------------------------------------------------------------------------
@@ -1448,8 +1448,8 @@ code:13F2                 add     al, [di+trackState.note]
 code:13F5                 and     al, 01111111b
 code:13F7                 mov     [di+trackState.note], al
 code:13FA                 dec     al
-code:13FC                 add     al, [di+trackState.n_offset_abs]
-code:13FF                 add     al, [di+trackState.n_offset_abs_vcmd]
+code:13FC                 add     al, [di+trackState.n_offset_track]
+code:13FF                 add     al, [di+trackState.n_offset_vcmd]
 code:1402                 and     al, 01111111b
 code:1404 loc_1404:                                                   ; CODE XREF: PWSEP+29↑j
 code:1404                 cmp     [di+trackState.output_channel], 3
@@ -1656,7 +1656,7 @@ code:1559                 retn
 code:155A ; ---------------------------------------------------------------------------
 code:155A loc_155A:                                                   ; CODE XREF: PFADE+10↑j
 code:155A                                                             ; PFADE+12↑j
-code:155A                 mov     al, [di+trackState.vcmd_volume]
+code:155A                 mov     al, [di+trackState.volume_vcmd]
 code:155D                 mov     ah, [di+trackState.fade_in_progess]
 code:1560                 and     ah, ah
 code:1562                 jns     short loc_1578
@@ -1680,8 +1680,8 @@ code:1580                 mov     [di+trackState.fade_in_progess], FALSE
 code:1584 loc_1584:                                                   ; CODE XREF: PFADE+28↑j
 code:1584                                                             ; PFADE+30↑j
 code:1584                                                             ; PFADE+37↑j
-code:1584                 mov     [di+trackState.volume], al
-code:1587                 mov     [di+trackState.vcmd_volume], al
+code:1584                 mov     [di+trackState.volume_track], al
+code:1587                 mov     [di+trackState.volume_vcmd], al
 code:158A                 retn
 code:158A endp            PFADE
 code:158A ; ---------------------------------------------------------------------------
@@ -1705,10 +1705,10 @@ code:15B4                 jnz     short loc_15CF
 code:15B6                 cmp     [byte ptr si], 0
 code:15B9                 jnz     short loc_15D4
 code:15BB                 mov     [di+trackState.legato_enabled], FALSE
-code:15BF                 mov     [di+trackState.volume], FALSE
+code:15BF                 mov     [di+trackState.volume_track], FALSE
 code:15C3                 call    KEYOFF
-code:15C6                 mov     al, [di+trackState.vcmd_volume]
-code:15C9                 mov     [di+trackState.volume], al
+code:15C6                 mov     al, [di+trackState.volume_vcmd]
+code:15C9                 mov     [di+trackState.volume_track], al
 code:15CC                 jmp     short loc_15D4
 code:15CE ; ---------------------------------------------------------------------------
 code:15CE                 nop
@@ -1846,12 +1846,12 @@ code:16B9 _skip_is_ssg:                                               ; CODE XRE
 code:16B9                 mov     al, [si]                            ; load byte 2
 code:16BB                 push    ax
 code:16BC                 inc     si                                  ; point to byte 3
-code:16BD                 mov     al, [di+trackState.vcmd_volume]
+code:16BD                 mov     al, [di+trackState.volume_vcmd]
 code:16C0                 sub     al, [si]
 code:16C2                 jnb     short _skip_vol_overflow
 code:16C4                 mov     al, 0
 code:16C6 _skip_vol_overflow:                                         ; CODE XREF: PLAY+12F↑j
-code:16C6                 mov     [di+trackState.volume], al
+code:16C6                 mov     [di+trackState.volume_track], al
 code:16C9                 inc     si                                  ; point to byte 4
 code:16CA                 mov     ax, [si]
 code:16CC                 mov     [di+trackState.volume_env_ptr], ax
@@ -2044,7 +2044,7 @@ code:17FB                 cmp     [di+trackState.fm3_enabled], FALSE  ; jumptabl
 code:17FF                 jz      short loc_1804
 code:1801                 call    _vcmdToggleFM3                      ; jumptable 000000000000170C case 43
 code:1804 loc_1804:                                                   ; CODE XREF: PLAY+26C↑j
-code:1804                 mov     [di+trackState.volume], 0
+code:1804                 mov     [di+trackState.volume_track], 0
 code:1808                 mov     [di+trackState.legato_enabled], FALSE
 code:180C                 call    KEYOFF
 code:180F loc_180F:
@@ -2056,7 +2056,7 @@ code:181B loc_181B:                                                   ; CODE XRE
 code:181B                 mov     [di+trackState.output_channel], 0FFh
 code:181E                 mov     [di+trackState.track_flags], 0
 code:1822                 mov     [di+trackState.porta_speed], 0
-code:1826                 mov     [di+trackState.note_offset_rel], 0
+code:1826                 mov     [di+trackState.n_offset_single], 0
 code:182A                 mov     [FETCH_LOOP_FINISHED], 1
 code:182F                 mov     [SEQ_CUSTOM], 0FEh
 code:1834                 retn
@@ -2108,7 +2108,7 @@ code:1882                 mov     [di+trackState.tick_cycled], 0
 code:1886 loc_1886:
 code:1886                 mov     [di+trackState.track_flags], 0
 code:188A                 mov     [di+trackState.porta_speed], 0
-code:188E                 mov     [di+trackState.note_offset_rel], 0
+code:188E                 mov     [di+trackState.n_offset_single], 0
 code:1892                 mov     [FETCH_LOOP_FINISHED], 1
 code:1897                 retn
 code:1898 ; ---------------------------------------------------------------------------
@@ -2200,9 +2200,9 @@ code:18FA ; --------------------------------------------------------------------
 code:18FA vcmdSetVolumes:                                             ; CODE XREF: PLAY+179↑j
 code:18FA                                                             ; DATA XREF: code:VCMD_JUMPTABLE↑o
 code:18FA                 mov     al, [si]                            ; jumptable 000000000000170C case 7
-code:18FC                 mov     [di+trackState.volume], al
-code:18FF                 mov     [di+trackState.vcmd_volume], al
-code:1902                 mov     [di+trackState.volume2], al
+code:18FC                 mov     [di+trackState.volume_track], al
+code:18FF                 mov     [di+trackState.volume_vcmd], al
+code:1902                 mov     [di+trackState.volume_unused], al
 code:1905                 inc     si
 code:1906                 retn
 code:1907 ; ---------------------------------------------------------------------------
@@ -2224,14 +2224,14 @@ code:191F ; --------------------------------------------------------------------
 code:191F vcmdAddRelTranspose:                                        ; CODE XREF: PLAY+179↑j
 code:191F                                                             ; DATA XREF: code:VCMD_JUMPTABLE↑o
 code:191F                 mov     al, [si]                            ; jumptable 000000000000170C case 9
-code:1921                 add     al, [di+trackState.n_offset_abs_vcmd]
-code:1924                 mov     [di+trackState.n_offset_abs_vcmd], al
+code:1921                 add     al, [di+trackState.n_offset_vcmd]
+code:1924                 mov     [di+trackState.n_offset_vcmd], al
 code:1927                 inc     si
 code:1928                 retn
 code:1929 ; ---------------------------------------------------------------------------
 code:1929 vcmdAddVolume:                                              ; CODE XREF: PLAY+179↑j
 code:1929                                                             ; DATA XREF: code:VCMD_JUMPTABLE↑o
-code:1929                 mov     al, [di+trackState.vcmd_volume]     ; jumptable 000000000000170C case 10
+code:1929                 mov     al, [di+trackState.volume_vcmd]     ; jumptable 000000000000170C case 10
 code:192C                 add     al, [si]
 code:192E                 jns     short loc_1932
 code:1930                 mov     al, 0
@@ -2240,8 +2240,8 @@ code:1932                 cmp     al, 10h
 code:1934                 jb      short loc_1938
 code:1936                 mov     al, 0Fh
 code:1938 loc_1938:                                                   ; CODE XREF: PLAY+3A1↑j
-code:1938                 mov     [di+trackState.volume], al
-code:193B                 mov     [di+trackState.vcmd_volume], al
+code:1938                 mov     [di+trackState.volume_track], al
+code:193B                 mov     [di+trackState.volume_vcmd], al
 code:193E                 inc     si
 code:193F                 retn
 code:1940 ; ---------------------------------------------------------------------------
@@ -2401,7 +2401,7 @@ code:1A0F vcmdSetPortamento:                                          ; CODE XRE
 code:1A0F                                                             ; DATA XREF: code:VCMD_JUMPTABLE↑o
 code:1A0F                 mov     al, [si]                            ; jumptable 000000000000170C case 4
 code:1A11                 mov     [di+trackState.porta_speed], al
-code:1A14                 mov     [di+trackState.note_offset_rel], 0
+code:1A14                 mov     [di+trackState.n_offset_single], 0
 code:1A18                 inc     si
 code:1A19                 retn
 code:1A1A ; ---------------------------------------------------------------------------
@@ -2409,7 +2409,7 @@ code:1A1A Sets note offset relative to last played note
 code:1A1A vcmdSetNoteOffsetRel:                                       ; CODE XREF: PLAY+179↑j
 code:1A1A                                                             ; DATA XREF: code:VCMD_JUMPTABLE↑o
 code:1A1A                 mov     al, [si]                            ; jumptable 000000000000170C case 20
-code:1A1C                 mov     [di+trackState.note_offset_rel], al
+code:1A1C                 mov     [di+trackState.n_offset_single], al
 code:1A1F                 mov     [di+trackState.porta_speed], 0
 code:1A23                 inc     si
 code:1A24                 retn
@@ -3175,7 +3175,7 @@ code:205F                 mov     al, 00h
 code:2061                 retn
 code:2062 ; ---------------------------------------------------------------------------
 code:2062 is_note:                                                    ; CODE XREF: CALVOL+4↑j
-code:2062                 mov     al, [di+trackState.volume]
+code:2062                 mov     al, [di+trackState.volume_track]
 code:2065                 mov     si, [di+trackState.volume_env_pos]
 code:2068                 mov     ah, [si]
 code:206A                 xor     ah, 00001111b
@@ -3272,8 +3272,8 @@ code:20FB                 retn
 code:20FC ; ---------------------------------------------------------------------------
 code:20FC is_fm3:                                                     ; CODE XREF: POLYON+F↑j
 code:20FC                 mov     [di+trackState.is_blocked], TRUE
-code:2100                 add     al, [di+trackState.n_offset_abs]
-code:2103                 add     al, [di+trackState.n_offset_abs_vcmd]
+code:2100                 add     al, [di+trackState.n_offset_track]
+code:2103                 add     al, [di+trackState.n_offset_vcmd]
 code:2106                 mov     [CUR_NOTE], al
 code:2109                 mov     al, [FM3_OP2]
 code:210C                 call    GET_FNUM                            ; BX=Fnum
@@ -3354,8 +3354,8 @@ code:21A3                 nop
 code:21A4 _need_state_update:                                         ; CODE XREF: KEYON+19↑j
 code:21A4                 mov     [di+trackState.volume_env_restart_pos], 0
 code:21A8                 mov     [di+trackState.note_played_once], TRUE
-code:21AC                 add     al, [di+trackState.n_offset_abs]
-code:21AF                 add     al, [di+trackState.n_offset_abs_vcmd]
+code:21AC                 add     al, [di+trackState.n_offset_track]
+code:21AF                 add     al, [di+trackState.n_offset_vcmd]
 code:21B2                 and     al, 01111111b
 code:21B4                 inc     al
 code:21B6                 call    STORE_NOTE
@@ -3408,7 +3408,7 @@ code:220F                 jmp     short exit
 code:2211 ; ---------------------------------------------------------------------------
 code:2211 loc_2211:                                                   ; CODE XREF: KEYON+9C↑j
 code:2211                 add     al, [di+2Ah]
-code:2214                 add     al, [di+trackState.n_offset_abs_vcmd]
+code:2214                 add     al, [di+trackState.n_offset_vcmd]
 code:2217                 and     al, 01111111b
 code:2219                 inc     al
 code:221B                 call    STORE_NOTE
