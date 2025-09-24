@@ -3,7 +3,7 @@
   "drums": ["0xb0", "0xcf"],
   "commands" : {
     "0x80": ["goto,cf", "addr,w"],
-    "0x81": ["jlne,c", "n", "addr,w"],
+    "0x81": ["jcnz,c", "n", "addr,w"],
     "0x82": ["stop,f"],
     "0x83": ["pe", "n"],
     "0x84": ["gl,p", "n"],

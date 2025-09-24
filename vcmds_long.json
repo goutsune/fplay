@@ -3,7 +3,7 @@
   "drums": ["0xb0", "0xcf"],
   "commands" : {
     "0x80": ["jumpToAddr,cf", "addr,w"],
-    "0x81": ["jumpIfCycleNeq,c", "cycle", "addr,w"],
+    "0x81": ["jumpIfCounterNZ,c", "cycle", "addr,w"],
     "0x82": ["stop,f"],
     "0x83": ["setPitchEnv", "n"],
     "0x84": ["setPortamento", "speed"],
