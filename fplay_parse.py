@@ -76,15 +76,22 @@ def proc_drumseq(drum_seq_ptr, name='gateSeq'):
   pos = drum_seq_ptr
   size = 1
   tokens = []
-  while (val:= DATA[pos]) < 0xff:
+  while True:
+
+    val = DATA[pos]
+
+
+    if DATA[pos] == 0xff:
+      tokens.append('nEnd')
+      break
+    # Why does this happen? Typo?
+    elif val == 0x81:
+      tokens.append('vStop')
+      break
+
     tokens.append(val)
     pos += 1
     size += 1
-
-  if DATA[pos] == 0xff:
-    tokens.append('nEnd')
-  else:
-    breakpoint()
 
   ADDR_MAP[drum_seq_ptr] = mkobj(name, _addr=drum_seq_ptr, tokens=tokens, length=size)
 
@@ -104,6 +111,10 @@ def proc_volseq(vol_seq_ptr):
       size += 1
     elif val == 0x81:
       tokens.append('vStop')
+      break
+    # Whyyy
+    elif val == 0xff:
+      tokens.append('nEnd')
       break
     elif val == 0x82:
       tokens.append('vRestart')
